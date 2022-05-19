@@ -6,6 +6,15 @@ namespace PCLUntils.IEnumerables
 {
     public static class IEnumerableUtils
     {
+        public static object FindItem(this IList objs, int index)
+        {
+            try
+            {
+                return objs.ElementAt(index);
+            }
+            catch { }
+            return default;
+        }
         public static T GetItem<T>(this IEnumerable enumerable, int index)
         {
             T result = default;

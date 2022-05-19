@@ -6,6 +6,28 @@ namespace PCLUntils.Json
 {
     public static class JsonUntils
     {
+        public static JObject ToJObject(this string json)
+        {
+            try
+            {
+                return JObject.Parse(json);
+            }
+            catch { }
+            return default;
+        }
+        public static JObject ToJObject(this object obj)
+        {
+            try
+            {
+                if (obj != null)
+                {
+                    var json = obj.ToString();
+                    return JObject.Parse(json);
+                }
+            }
+            catch { }
+            return default;
+        }
         public static string ToString(this JToken token, string key, string defaultValue = "")
         {
             try
