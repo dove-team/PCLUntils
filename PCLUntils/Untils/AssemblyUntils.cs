@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace PCLUntils
+namespace PCLUntils.Assemblly
 {
     public static class AssemblyUntils
     {

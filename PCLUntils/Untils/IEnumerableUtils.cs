@@ -2,10 +2,30 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace PCLUntils
+namespace PCLUntils.IEnumerables
 {
     public static class IEnumerableUtils
     {
+        public static T GetItem<T>(this IEnumerable enumerable, int index)
+        {
+            T result = default;
+            try
+            {
+                int count = 0;
+                var enumerator = enumerable.GetEnumerator();
+                while (enumerator.MoveNext())
+                {
+                    if (count == index)
+                    {
+                        result = (T)enumerator.Current;
+                        break;
+                    }
+                    count++;
+                }
+            }
+            catch { }
+            return result;
+        }
         public static bool IsFirst(this IEnumerable items, object item)
         {
             try
