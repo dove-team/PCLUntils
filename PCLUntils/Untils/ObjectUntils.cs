@@ -1,8 +1,6 @@
-﻿using PCLCrypto;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace PCLUntils.Objects
@@ -59,18 +57,6 @@ namespace PCLUntils.Objects
             }
             catch { }
             return string.Empty;
-        }
-        public static string ToMD5(this string input)
-        {
-            try
-            {
-                var asymmetricKeyAlgorithmProvider = WinRTCrypto.HashAlgorithmProvider.OpenAlgorithm(HashAlgorithm.Md5);
-                var cryptographicKey = WinRTCrypto.CryptographicBuffer.ConvertStringToBinary(input, Encoding.UTF8);
-                var hashData = asymmetricKeyAlgorithmProvider.HashData(cryptographicKey);
-                return WinRTCrypto.CryptographicBuffer.EncodeToHexString(hashData);
-            }
-            catch { }
-            return input;
         }
         public static long ToTimeStamp(this DateTime time)
         {
