@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-	  <Version>1.0.4</Version>
+	  <Version>1.0.6</Version>
 	  <Product>PCLUntils</Product>
 	  <Authors>michael_eddy</Authors>
 	  <LangVersion>latest</LangVersion>
@@ -14,5 +14,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Xam.Plugin.DeviceInfo" Version="4.2.0-beta" />
   </ItemGroup>
 </Project>

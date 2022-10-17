@@ -3,6 +3,7 @@
     public enum Platforms
     {
         UnSupport,
+        iOS,
         Android,
         Linux,
         Windows,

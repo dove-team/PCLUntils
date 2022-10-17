@@ -1,11 +1,12 @@
-﻿using System.Diagnostics;
+﻿using Plugin.DeviceInfo;
+using Plugin.DeviceInfo.Abstractions;
 using System.Runtime.InteropServices;
 
 namespace PCLUntils.Plantform
 {
     public static class PlantformUntils
     {
-        public static string CurrentArchString
+        public static string ArchitectureString
         {
             get
             {
@@ -19,7 +20,20 @@ namespace PCLUntils.Plantform
                 };
             }
         }
-        public static Platforms Platform
+        public static bool IsArmArchitecture
+        {
+            get
+            {
+                try
+                {
+                    var arch = RuntimeInformation.ProcessArchitecture;
+                    return arch == Architecture.Arm || arch == Architecture.Arm64;
+                }
+                catch { }
+                return false;
+            }
+        }
+        public static Platforms System
         {
             get
             {
@@ -28,6 +42,8 @@ namespace PCLUntils.Plantform
                 {
                     if (IsAndroid)
                         platform = Platforms.Android;
+                    else if (IsiOS)
+                        platform = Platforms.iOS;
                     else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                         platform = Platforms.Linux;
                     else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
@@ -39,25 +55,28 @@ namespace PCLUntils.Plantform
                 return platform;
             }
         }
+        public static bool IsiOS
+        {
+            get
+            {
+                try
+                {
+                    return CrossDeviceInfo.Current.Platform == Platform.iOS;
+                }
+                catch { }
+                return false;
+            }
+        }
         public static bool IsAndroid
         {
             get
             {
-                using var process = new Process();
-                process.StartInfo.FileName = "getprop";
-                process.StartInfo.Arguments = "ro.build.user";
-                process.StartInfo.RedirectStandardOutput = true;
-                process.StartInfo.UseShellExecute = false;
-                process.StartInfo.CreateNoWindow = true;
-                bool isAndroid = false;
                 try
                 {
-                    process.Start();
-                    var output = process.StandardOutput.ReadToEnd();
-                    isAndroid = !string.IsNullOrEmpty(output);
+                    return CrossDeviceInfo.Current.Platform == Platform.Android;
                 }
                 catch { }
-                return isAndroid;
+                return false;
             }
         }
     }
