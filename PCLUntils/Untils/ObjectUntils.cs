@@ -1,12 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 
 namespace PCLUntils.Objects
 {
     public static class ObjectUntils
     {
+        public static byte[] ToByte<T>(this T structure)
+        {
+            int size = Marshal.SizeOf(typeof(T));
+            byte[] buffer = new byte[size];
+            IntPtr bufferIntPtr = Marshal.AllocHGlobal(size);
+            try
+            {
+                Marshal.StructureToPtr(structure, bufferIntPtr, true);
+                Marshal.Copy(bufferIntPtr, buffer, 0, size);
+            }
+            finally
+            {
+                Marshal.FreeHGlobal(bufferIntPtr);
+            }
+            return buffer;
+        }
         public static bool IsEmpty<T>(this T obj)
         {
             try
