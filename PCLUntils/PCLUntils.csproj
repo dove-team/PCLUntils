@@ -5,9 +5,9 @@
 	  <Authors>michael_eddy</Authors>
 	  <LangVersion>latest</LangVersion>
 	  <RootNamespace>PCLUntils</RootNamespace>
-	  <TargetFramework>netstandard2.0</TargetFramework>
 	  <EnforceCodeStyleInBuild>false</EnforceCodeStyleInBuild>
 	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
+	  <TargetFrameworks>net45;netstandard2.0</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />

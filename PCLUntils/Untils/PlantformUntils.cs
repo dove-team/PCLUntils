@@ -1,6 +1,10 @@
-﻿using Plugin.DeviceInfo;
+﻿#if NET45
+using System;
+#else
+using Plugin.DeviceInfo;
 using Plugin.DeviceInfo.Abstractions;
 using System.Runtime.InteropServices;
+#endif
 
 namespace PCLUntils.Plantform
 {
@@ -10,6 +14,9 @@ namespace PCLUntils.Plantform
         {
             get
             {
+#if NET45
+                return Environment.Is64BitProcess ? "x64" : "x86";
+#else
                 return RuntimeInformation.ProcessArchitecture switch
                 {
                     Architecture.X86 => "x86",
@@ -18,6 +25,7 @@ namespace PCLUntils.Plantform
                     Architecture.Arm64 => "arm64",
                     _ => "unknow",
                 };
+#endif
             }
         }
         public static bool IsArmArchitecture
@@ -26,8 +34,10 @@ namespace PCLUntils.Plantform
             {
                 try
                 {
+#if !NET45
                     var arch = RuntimeInformation.ProcessArchitecture;
                     return arch == Architecture.Arm || arch == Architecture.Arm64;
+#endif
                 }
                 catch { }
                 return false;
@@ -40,6 +50,9 @@ namespace PCLUntils.Plantform
                 Platforms platform = Platforms.UnSupport;
                 try
                 {
+#if NET45
+                        platform = Platforms.Windows;
+#else
                     if (IsAndroid)
                         platform = Platforms.Android;
                     else if (IsiOS)
@@ -50,6 +63,7 @@ namespace PCLUntils.Plantform
                         platform = Platforms.MacOS;
                     else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                         platform = Platforms.Windows;
+#endif
                 }
                 catch { }
                 return platform;
@@ -61,7 +75,9 @@ namespace PCLUntils.Plantform
             {
                 try
                 {
+#if !NET45
                     return CrossDeviceInfo.Current.Platform == Platform.iOS;
+#endif
                 }
                 catch { }
                 return false;
@@ -73,7 +89,9 @@ namespace PCLUntils.Plantform
             {
                 try
                 {
+#if !NET45
                     return CrossDeviceInfo.Current.Platform == Platform.Android;
+#endif
                 }
                 catch { }
                 return false;
